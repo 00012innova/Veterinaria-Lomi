@@ -1,0 +1,715 @@
+/* =============================================================
+   PALETA DE COLORES
+   Tomada directamente del documento "SISTEMA VETERINARIA".
+   Se usan variables CSS para no repetir los códigos HEX y poder
+   reutilizarlos en todo el sitio de forma consistente.
+   ============================================================= */
+:root {
+  --color-primario:    #4BB9C3; /* Encabezado, menú, títulos */
+  --color-secundario:  #FFAB5E; /* Botones principales */
+  --color-acento:      #284D49; /* Detalles, íconos, elementos decorativos */
+  --color-fondo:       #FBF8F2; /* Fondo general de las interfaces */
+  --color-texto:       #2D3436; /* Texto de párrafos, etiquetas, tablas */
+
+  /* Colores de estado del sistema (mencionados en la paleta) */
+  --color-exito:        #27AE60; /* Confirmaciones / guardado exitoso */
+  --color-advertencia:  #F2994A; /* Vacuna próxima a vencer, horarios por confirmar, etc. */
+  --color-error:        #EB5757; /* Errores */
+  --color-info:         #2F80ED; /* Mensajes informativos */
+
+  /* Utilidades generales */
+  --borde-radio: 10px;
+  --sombra: 0 2px 10px rgba(40, 77, 73, 0.10);
+  --fuente: 'Poppins', Arial, sans-serif;
+}
+
+/* =============================================================
+   RESET BÁSICO
+   ============================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--fuente);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: var(--fuente);
+  cursor: pointer;
+  border: none;
+}
+
+/* =============================================================
+   ENCABEZADO / MENÚ DE NAVEGACIÓN
+   Fondo color primario (turquesa), tal como se ve en el ejemplo
+   del documento. Logo a la izquierda, 7 links al centro,
+   notificaciones y perfil a la derecha.
+   ============================================================= */
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  background-color: var(--color-primario);
+  padding: 12px 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--sombra);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.brand-name {
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.main-nav ul {
+  display: flex;
+  list-style: none;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.main-nav a {
+  color: #FFFFFF;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.main-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Apartado activo/actual del menú (Registro de Datos), resaltado
+   con el color de acento, igual que en el ejemplo del documento */
+.main-nav a.active {
+  background-color: var(--color-acento);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon-btn {
+  background: transparent;
+  font-size: 1.2rem;
+  color: #FFFFFF;
+  padding: 6px;
+  border-radius: 50%;
+}
+
+.icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.profile-pic {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #FFFFFF;
+}
+
+/* =============================================================
+   CONTENIDO PRINCIPAL
+   ============================================================= */
+.content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+.page-title {
+  color: var(--color-acento);
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.page-subtitle {
+  color: var(--color-texto);
+  opacity: 0.75;
+  margin-bottom: 28px;
+}
+
+/* Tarjeta blanca que envuelve cada sección (registro / citas),
+   como se ve en el mockup "Pantalla de registro" */
+.card {
+  background-color: #FFFFFF;
+  border-radius: var(--borde-radio);
+  box-shadow: var(--sombra);
+  padding: 28px 32px;
+  margin-bottom: 36px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.card-header h2 {
+  color: var(--color-acento);
+  font-size: 1.35rem;
+}
+
+/* =============================================================
+   FORMULARIOS
+   Dos columnas por fila, igual que en el wireframe de
+   "Registrar Datos".
+   ============================================================= */
+.form-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.full-width {
+  width: 100%;
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-acento);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  border: 1.5px solid var(--color-primario);
+  border-radius: var(--borde-radio);
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  font-family: var(--fuente);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-acento);
+}
+
+/* Botones de acción (Guardar / Cancelar) */
+.form-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 11px 28px;
+  border-radius: var(--borde-radio);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Botón principal: color secundario de la paleta (naranja) */
+.btn-primary {
+  background-color: var(--color-secundario);
+  color: #FFFFFF;
+}
+
+/* Botón cancelar: contorno con el color primario, fondo blanco */
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: var(--color-acento);
+  border: 1.5px solid var(--color-primario);
+}
+
+/* Mensaje de éxito, usando el color de "éxito" de la paleta */
+.mensaje-exito {
+  margin-top: 16px;
+  color: var(--color-exito);
+  background-color: rgba(39, 174, 96, 0.1);
+  border: 1px solid var(--color-exito);
+  border-radius: var(--borde-radio);
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* =============================================================
+   CALENDARIO DE DISPONIBILIDAD (sección de citas)
+   Cuadrícula tipo semanal, según el wireframe dibujado a mano.
+   ============================================================= */
+.calendario-container {
+  margin: 10px 0 26px;
+}
+
+.calendario-label {
+  font-weight: 600;
+  color: var(--color-acento);
+  margin-bottom: 12px;
+}
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.dia-header {
+  text-align: center;
+  font-weight: 700;
+  color: #FFFFFF;
+  background-color: var(--color-primario);
+  padding: 8px 0;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+/* Cada celda de horario disponible */
+.hora-slot {
+  background-color: var(--color-fondo);
+  border: 1.5px solid var(--color-primario);
+  border-radius: 6px;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-texto);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.hora-slot:hover:not(.ocupado) {
+  background-color: var(--color-primario);
+  color: #FFFFFF;
+}
+
+/* Horario ya elegido por el usuario */
+.hora-slot.seleccionado {
+  background-color: var(--color-secundario);
+  border-color: var(--color-secundario);
+  color: #FFFFFF;
+}
+
+/* Horario ya ocupado / no disponible */
+.hora-slot.ocupado {
+  background-color: #E8E6E1;
+  border-color: #E8E6E1;
+  color: #A9A9A9;
+  cursor: not-allowed;
+}
+
+/* Leyenda debajo del calendario */
+.calendario-leyenda {
+  display: flex;
+  gap: 22px;
+  margin-top: 14px;
+  font-size: 0.8rem;
+  color: var(--color-texto);
+  flex-wrap: wrap;
+}
+
+.calendario-leyenda span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cuadro {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.cuadro.disponible {
+  background-color: var(--color-fondo);
+  border: 1.5px solid var(--color-primario);
+}
+
+.cuadro.seleccionado {
+  background-color: var(--color-secundario);
+}
+
+.cuadro.ocupado-leyenda {
+  background-color: #E8E6E1;
+}
+
+/* =============================================================
+   SUBIR FOTOGRAFÍA DE LA MASCOTA
+   ============================================================= */
+.foto-upload {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  background-color: var(--color-fondo);
+  border: 1.5px dashed var(--color-primario);
+  border-radius: var(--borde-radio);
+  padding: 16px;
+}
+
+.foto-preview-wrap {
+  flex-shrink: 0;
+}
+
+.foto-preview {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-primario);
+  background-color: #FFFFFF;
+}
+
+.foto-upload-controls {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.foto-upload-controls input[type="file"] {
+  font-size: 0.85rem;
+  color: var(--color-texto);
+}
+
+.foto-hint {
+  font-size: 0.75rem;
+  color: var(--color-texto);
+  opacity: 0.65;
+}
+
+.btn-small {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  align-self: flex-start;
+}
+
+/* =============================================================
+   MENSAJE DE ERROR (usa el color de error de la paleta)
+   ============================================================= */
+.mensaje-error {
+  margin-top: 16px;
+  color: var(--color-error);
+  background-color: rgba(235, 87, 87, 0.1);
+  border: 1px solid var(--color-error);
+  border-radius: var(--borde-radio);
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* =============================================================
+   LISTA DE MASCOTAS REGISTRADAS
+   ============================================================= */
+.mascotas-registradas {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(40, 77, 73, 0.12);
+}
+
+.mascotas-registradas h3,
+.agenda-citas h3 {
+  color: var(--color-acento);
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+}
+
+.mascotas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+}
+
+.mascota-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--color-fondo);
+  border: 1px solid rgba(40, 77, 73, 0.12);
+  border-radius: var(--borde-radio);
+  padding: 12px;
+  position: relative;
+}
+
+.mascota-foto {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-primario);
+  flex-shrink: 0;
+}
+
+.mascota-info {
+  overflow: hidden;
+}
+
+.mascota-nombre {
+  font-weight: 700;
+  color: var(--color-acento);
+  font-size: 0.95rem;
+}
+
+.mascota-detalle {
+  font-size: 0.8rem;
+  color: var(--color-texto);
+  opacity: 0.8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mascota-eliminar {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: transparent;
+  color: var(--color-error);
+  font-size: 0.9rem;
+  opacity: 0.5;
+}
+
+.mascota-eliminar:hover {
+  opacity: 1;
+}
+
+.lista-vacia {
+  color: var(--color-texto);
+  opacity: 0.6;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* =============================================================
+   NAVEGACIÓN ENTRE SEMANAS DEL CALENDARIO
+   ============================================================= */
+.calendario-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.calendario-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--color-acento);
+  font-size: 0.9rem;
+}
+
+.btn-semana {
+  background-color: var(--color-primario);
+  color: #FFFFFF;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.btn-semana:hover {
+  background-color: var(--color-acento);
+}
+
+/* =============================================================
+   AGENDA DE CITAS
+   ============================================================= */
+.agenda-citas {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(40, 77, 73, 0.12);
+}
+
+.agenda-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agenda-fila {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background-color: var(--color-fondo);
+  border: 1px solid rgba(40, 77, 73, 0.12);
+  border-radius: var(--borde-radio);
+  padding: 10px 16px;
+}
+
+.agenda-fecha {
+  font-weight: 700;
+  color: var(--color-primario);
+  font-size: 0.85rem;
+  min-width: 110px;
+}
+
+.agenda-detalle {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--color-texto);
+}
+
+.agenda-cancelar {
+  background-color: #FFFFFF;
+  color: var(--color-error);
+  border: 1.5px solid var(--color-error);
+  border-radius: var(--borde-radio);
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.agenda-cancelar:hover {
+  background-color: var(--color-error);
+  color: #FFFFFF;
+}
+
+/* =============================================================
+   PIE DE PÁGINA
+   Colores tomados tal cual del documento: fondo de acento
+   (#284D49), títulos en color secundario (naranja), texto blanco.
+   ============================================================= */
+.main-footer {
+  background-color: #4BB9C3;
+  color: #FFFFFF;
+  padding: 36px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: space-between;
+}
+
+.footer-col {
+  flex: 1 1 220px;
+}
+
+.footer-col h3,
+.footer-col h4 {
+  color: var(--color-secundario);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-logo-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.footer-col p {
+  font-size: 0.9rem;
+  opacity: 0.92;
+  margin-bottom: 6px;
+}
+
+.footer-brand p {
+  max-width: 260px;
+}
+
+/* =============================================================
+   RESPONSIVE - se adapta a pantallas pequeñas
+   ============================================================= */
+@media (max-width: 720px) {
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .main-nav ul {
+    gap: 12px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .calendario-grid {
+    grid-template-columns: repeat(7, minmax(40px, 1fr));
+    font-size: 0.7rem;
+  }
+
+  .hora-slot {
+    padding: 6px 0;
+    font-size: 0.7rem;
+  }
+
+  .foto-upload {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .agenda-fila {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .main-footer {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
