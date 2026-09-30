@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda - Veterinaria</title>
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+  <!-- Barra de Navegación Superior -->
+  <header class="navbar">
+    
+    <div class="nav-logo">
+      <a href="index-inicio.html">
+        <img src="imagenesss/lomi-logo.png" alt="Logo Veterinaria" class="logo-img">
+      </a>
+    </div>
+
+    <nav class="nav-links">
+      <a href="index-inicio.html">Inicio</a>
+      <a href="index-registro.html">Registro de Datos</a>
+      <a href="historial.html">Historial</a>
+      <a href="#tienda" class="active">Tienda</a>
+      <a href="index-servicios.html">Servicios</a>
+      <a href="indexreseña.html">Reseñas</a>
+    </nav>
+
+    <div class="user-actions">
+      
+      <div class="notification-container">
+        <button class="icon-btn notification-btn" id="btn-notificaciones" type="button" title="Notificaciones">
+          <img src="imagenesss/campana-removebg-preview.png" alt="Notificaciones" class="icon-img">
+          <span class="badge notification-badge oculto" id="notification-badge">0</span>
+        </button>
+
+        <div class="notification-dropdown" id="notification-dropdown">
+          <div class="notification-header">
+            <h3>Notificaciones</h3>
+          </div>
+          <div class="notification-list" id="notification-list">
+            <p class="notif-vacia">Aún no hay notificaciones</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="user-profile-container" id="user-profile-container">
+        <button type="button" class="user-avatar-btn" id="btn-user-avatar" title="Perfil de usuario">
+          <img src="user-avatar.png" alt="Perfil" id="user-avatar" class="user-avatar-img">
+        </button>
+
+        <div class="user-dropdown-menu oculto" id="user-dropdown-menu">
+          <div class="dropdown-header">
+            <p class="user-name" id="user-name-text">Invitado</p>
+            <p class="user-email" id="user-email-text">Sin sesión iniciada</p>
+          </div>
+          <hr class="dropdown-divider">
+          <ul class="dropdown-list" id="dropdown-list-options">
+            <li><a href="#cuenta" class="dropdown-item" id="menu-opcion-cuenta">Mi Cuenta</a></li>
+            <li><a href="#privacidad" class="dropdown-item" id="menu-opcion-privacidad">Avisos de Privacidad</a></li>
+            <li><button type="button" class="dropdown-item btn-logout" id="menu-opcion-logout">Cerrar Sesión</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="container">
+
+    <section class="hero-banner">
+      <div class="hero-text">
+        <h1>Tienda de Productos</h1>
+        <p>Encuentra todo lo que tu mascota necesita: desde alimentos balanceados, accesorios de alta calidad hasta medicinas de prescripción rápida.</p>
+        <p class="hero-subtext">Explora nuestro catálogo con categorías organizadas para una fácil búsqueda y compra directa.</p>
+      </div>
+      
+      <div class="hero-image-placeholder">
+        <img src="imagenesss/banner.jpg" alt="Banner Informativo" class="banner-img">
+      </div>
+    </section>
+
+    <section class="products-section">
+      <div class="search-cart-container">
+        <div class="search-box">
+          <input type="text" id="input-busqueda" placeholder="Buscar productos para tu mascota...">
+          <button class="search-btn">Buscar</button>
+        </div>
+
+        <a href="#carrito" class="cart-btn" title="Ver Carrito de Compras">
+          <img src="imagenesss/Shopping_Cart_Icon_Animation-removebg-preview.png" alt="Carrito" class="cart-icon-img">
+          <span class="cart-badge" id="cart-badge">0</span>
+        </a>
+      </div>
+
+      <!-- Modal Carrito -->
+      <div id="modal-carrito" class="modal-carrito">
+        <div class="modal-contenido">
+          <div class="modal-header">
+            <h2>Carrito de Compras</h2>
+            <button id="cerrar-carrito" class="btn-cerrar">&times;</button>
+          </div>
+          <div id="lista-carrito" class="lista-carrito">
+            <p class="carrito-vacio">Tu carrito está vacío.</p>
+          </div>
+          <div class="modal-footer">
+            <div class="total-box">
+              <span>Total a pagar:</span>
+              <strong id="total-precio">$0.00</strong>
+            </div>
+            <button id="btn-comprar" class="btn-comprar">Comprar ahora</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Pago -->
+      <div id="modal-pago" class="modal-carrito">
+        <div class="modal-contenido modal-pago-contenido">
+          <div class="modal-header">
+            <h2>Método de Pago</h2>
+            <button id="cerrar-pago" class="btn-cerrar">&times;</button>
+          </div>
+          <div class="pago-body">
+            <p class="pago-subtitulo">Selecciona cómo deseas realizar tu compra:</p>
+            <div class="metodos-opciones">
+              <label class="opcion-pago">
+                <input type="radio" name="metodo_pago" value="oxxo" checked>
+                <div class="opcion-card">
+                  <strong>OXXO Pay</strong>
+                  <span>Pago en efectivo en tienda</span>
+                </div>
+              </label>
+              <label class="opcion-pago">
+                <input type="radio" name="metodo_pago" value="mercadopago">
+                <div class="opcion-card">
+                  <strong>Mercado Pago</strong>
+                  <span>Saldo en cuenta o dinero en app</span>
+                </div>
+              </label>
+              <label class="opcion-pago">
+                <input type="radio" name="metodo_pago" value="spei">
+                <div class="opcion-card">
+                  <strong>Transferencia SPEI</strong>
+                  <span>Pago directo desde tu banco</span>
+                </div>
+              </label>
+              <label class="opcion-pago">
+                <input type="radio" name="metodo_pago" value="tarjeta">
+                <div class="opcion-card">
+                  <strong>Tarjeta Débito / Crédito</strong>
+                  <span>Pago inmediato en línea</span>
+                </div>
+              </label>
+            </div>
+            <div id="detalles-pago-box" class="detalles-pago-box"></div>
+            <div class="resumen-total-pago">
+              <span class="label-total">Total:</span>
+              <strong id="pago-total-monto" class="monto-total">$0.00</strong>
+            </div>
+            <button id="btn-confirmar-pago" class="btn-confirmar-pago">Confirmar y Pagar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Detalle del Producto (Vista Temu) -->
+      <div id="modal-detalle-producto" class="modal-carrito">
+        <div class="modal-contenido modal-detalle-contenido">
+          <button id="cerrar-detalle" class="btn-cerrar">&times;</button>
+          <div class="detalle-grid">
+            <div class="galeria-contenedor">
+              <div class="imagen-principal-box">
+                <img id="detalle-img-principal" src="" alt="Producto grande">
+              </div>
+              <div class="miniaturas-contenedor" id="miniaturas-box"></div>
+            </div>
+            <div class="detalle-info">
+              <span class="category-tag" id="detalle-categoria">Categoría</span>
+              <h2 id="detalle-titulo">Nombre del Producto</h2>
+              <p class="detalle-precio" id="detalle-precio">$0.00</p>
+              <div class="detalle-descripcion-box">
+                <h3>Descripción del Producto</h3>
+                <p id="detalle-descripcion">Cargando...</p>
+              </div>
+              <div class="detalle-acciones">
+                <div class="cantidad-selector">
+                  <button id="btn-menos" type="button">-</button>
+                  <input type="number" id="input-cantidad" value="1" readonly>
+                  <button id="btn-mas" type="button">+</button>
+                </div>
+                <button id="btn-agregar-desde-detalle" class="btn-confirmar-pago">Agregar al Carrito</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <h2>Catálogo de Productos</h2>
+        <p>Selecciona una categoría o explora nuestros productos destacados</p>
+      </div>
+
+      <!-- Filtros por Categoría -->
+      <div class="categories-filter">
+        <button class="filter-btn active" data-categoria="Todos">Todos</button>
+        <button class="filter-btn" data-categoria="Comida">Comida</button>
+        <button class="filter-btn" data-categoria="Accesorios">Accesorios</button>
+        <button class="filter-btn" data-categoria="Medicina">Medicina</button>
+      </div>
+
+      <!-- Grid de Tarjetas de Productos (20 Productos en total) -->
+      <div class="products-grid">
+
+        <!-- Producto 1 -->
+        <article class="product-card" data-categoria="Comida">
+          <div class="product-img-box">
+            <img src="imagenesss/alimentorp.png" alt="Producto 1" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Comida</span>
+            <h3>Alimento para razas pequeñas</h3>
+            <p>Nutrición completa para perros de razas medianas (Full Life Cachorro RP 4 Kg Original Sellado).</p>
+            <div class="card-bottom">
+              <span class="price">$700.00</span>
+              <button class="btn-cart" data-id="1" data-nombre="Alimento Perro Adulto" data-precio="700.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 2 -->
+        <article class="product-card" data-categoria="Accesorios">
+          <div class="product-img-box">
+            <img src="imagenesss/correa.png" alt="Producto 2" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Accesorios</span>
+            <h3>Correa Económica</h3>
+            <p>Resistente y cómoda para paseos diarios.</p>
+            <div class="card-bottom">
+              <span class="price">$60.50</span>
+              <button class="btn-cart" data-id="2" data-nombre="Correa Económica" data-precio="60.50">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 3 -->
+        <article class="product-card" data-categoria="Medicina">
+          <div class="product-img-box">
+            <img src="imagenesss/desparicitante.png" alt="Producto 3" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Medicina</span>
+            <h3>Desparasitante Canino y Felino</h3>
+            <p>6 Comprimidos Antiparasitarios Para Perros Y Gatos Desparasitación Interna.</p>
+            <div class="card-bottom">
+              <span class="price">$300.00</span>
+              <button class="btn-cart" data-id="3" data-nombre="Desparasitante Canino" data-precio="300.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 4 -->
+        <article class="product-card" data-categoria="Comida">
+          <div class="product-img-box">
+            <img src="imagenesss/snacks.png" alt="Producto 4" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Comida</span>
+            <h3>Snacks de Premiación</h3>
+            <p>Granos de Pollo Congelado en Cubo 545g 1 Unidad, Snack para Perros y Gatos, Universal para Mascotas, Recompensa para Entrenamiento Aumenta la Interacción.</p>
+            <div class="card-bottom">
+              <span class="price">$450.50</span>
+              <button class="btn-cart" data-id="4" data-nombre="Snacks de Premiación" data-precio="450.50">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 5 (Oculto inicial) -->
+        <article class="product-card producto-oculto" data-categoria="Accesorios">
+          <div class="product-img-box">
+            <img src="imagenesss/cama.p.g.png" alt="Producto 5" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Accesorios</span>
+            <h3>Cama Acolchada</h3>
+            <p>Cama Redonda para Perros y Gatos, Base Antideslizante, Cálida y Cómoda para Invierno.</p>
+            <div class="card-bottom">
+              <span class="price">$200.00</span>
+              <button class="btn-cart" data-id="5" data-nombre="Cama Acolchada" data-precio="200.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 6 -->
+        <article class="product-card producto-oculto" data-categoria="Medicina">
+          <div class="product-img-box">
+            <img src="imagenesss/shampoo.png" alt="Producto 6" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Medicina</span>
+            <h3>Shampoo Antipulgas</h3>
+            <p>Refresco Instantáneo, Champú y Acondicionador 4 en 1 para Mascotas de Gran Capacidad de 100 ml.</p>
+            <div class="card-bottom">
+              <span class="price">$180.00</span>
+              <button class="btn-cart" data-id="6" data-nombre="Shampoo Antipulgas" data-precio="180.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 7 -->
+        <article class="product-card producto-oculto" data-categoria="Accesorios">
+          <div class="product-img-box">
+            <img src="imagenesss/lentes de sol.png" alt="Producto 7" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Accesorios</span>
+            <h3>Lentes de sol</h3>
+            <p>Gafas de moda para mascotas, gafas bonitas para gatos y perros, accesorio de moda para sesión de fotos.</p>
+            <div class="card-bottom">
+              <span class="price">$80.00</span>
+              <button class="btn-cart" data-id="7" data-nombre="Lentes de sol" data-precio="80.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 8 -->
+        <article class="product-card producto-oculto" data-categoria="Comida">
+          <div class="product-img-box">
+            <img src="imagenesss/huesos.png" alt="Producto 8" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Comida</span>
+            <h3>Huesos de pollo</h3>
+            <p>Paquete de 7 palitos para masticar para perros, aptos para cachorros pequeños, medianos y grandes.</p>
+            <div class="card-bottom">
+              <span class="price">$40.00</span>
+              <button class="btn-cart" data-id="8" data-nombre="Hueso de pollo" data-precio="40.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 9 -->
+        <article class="product-card producto-oculto" data-categoria="Medicina">
+          <div class="product-img-box">
+            <img src="imagenesss/gotas.png" alt="Producto 9" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Medicina</span>
+            <h3>Gotas para lagañas</h3>
+            <p>Solución para el cuidado ocular de mascotas AMZ, limpiador universal del área de los ojos para gatos y perros.</p>
+            <div class="card-bottom">
+              <span class="price">$154.00</span>
+              <button class="btn-cart" data-id="9" data-nombre="Gotas para lagañas" data-precio="154.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 10 -->
+        <article class="product-card producto-oculto" data-categoria="Accesorios">
+          <div class="product-img-box">
+            <img src="imagenesss/gorros.png" alt="Producto 10" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Accesorios</span>
+            <h3>Gorra de sol</h3>
+            <p>Sombrero de sol personalizado para perro y gato, 1 pieza, con nombre personalizado y patrón de hueso.</p>
+            <div class="card-bottom">
+              <span class="price">$100.00</span>
+              <button class="btn-cart" data-id="10" data-nombre="Gorra de sol" data-precio="100.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 11 -->
+        <article class="product-card producto-oculto" data-categoria="Comida">
+          <div class="product-img-box">
+            <img src="imagenesss/galletas.png" alt="Producto 11" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Comida</span>
+            <h3>Galletas para gatos</h3>
+            <p> Diamond Maintenance Super Premium 2.72 Kg, embalaje original sellado.</p>
+            <div class="card-bottom">
+              <span class="price">$650.00</span>
+              <button class="btn-cart" data-id="11" data-nombre="Galletas para gatos" data-precio="650.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 12 -->
+        <article class="product-card producto-oculto" data-categoria="Accesorios">
+          <div class="product-img-box">
+            <img src="imagenesss/sudadera.png" alt="Producto 12" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Accesorios</span>
+            <h3>Sudadera con capucha para mascotas</h3>
+            <p>1 Sudadera con capucha para mascotas de animales 3D de dibujos animados 
+              | Tejido de punto de poliéster cálido, adecuada para perros medianos y pequeños, cachorros recién nacidos, 
+              para todas las estaciones</p>
+            <div class="card-bottom">
+              <span class="price">$120.00</span>
+              <button class="btn-cart" data-id="12" data-nombre="Sudadera con capucha para mascotas" data-precio="120.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 13 -->
+        <article class="product-card producto-oculto" data-categoria="Medicina">
+          <div class="product-img-box">
+            <img src="imagenesss/medicina.png" alt="Producto 13" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Medicina</span>
+            <h3>Trate la Osteoartritis Canina con Galliprant</h3>
+            <p>Galliprant es el primer AINE de su tipo que ataca la fuente del dolor y la inflamación de la osteoartritis desde el principio.</p>
+            <div class="card-bottom">
+              <span class="price">$280.00</span>
+              <button class="btn-cart" data-id="13" data-nombre="Trate la osteoartritis Canina con Galliprant" data-precio="280.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 14 -->
+        <article class="product-card producto-oculto" data-categoria="Accesorios">
+          <div class="product-img-box">
+            <img src="imagenesss/hierba gatera.png" alt="Producto 14" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Accesorios</span>
+            <h3>Juguete con Hierba Gatera</h3>
+            <p>Juguete Bola Delfín Alimento Catnip Interactiva Para Gatos</p>
+            <div class="card-bottom">
+              <span class="price">$100.00</span>
+              <button class="btn-cart" data-id="14" data-nombre="Juguete con Hierba Gatera" data-precio="100.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 15 -->
+        <article class="product-card producto-oculto" data-categoria="Comida">
+          <div class="product-img-box">
+            <img src="imagenesss/sobre.png" alt="Producto 15" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Comida</span>
+            <h3>Alimento para perro y gatos en sobre</h3>
+            <p>Bocadillos para mascotas, rollos de pollo y verduras por valor de 5 envases, dientes molares limpios, 
+              soporte para la salud gastrointestinal, nutrición saludable, 
+              general para gatos y perros.</p>
+            <div class="card-bottom">
+              <span class="price">$555.00</span>
+              <button class="btn-cart" data-id="15" data-nombre="Alimento para perro y gatos en sobre" data-precio="555.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 16 -->
+        <article class="product-card producto-oculto" data-categoria="Accesorios">
+          <div class="product-img-box">
+            <img src="imagenesss/cepillo.png" alt="Producto 16" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Accesorios</span>
+            <h3>Cepillo Quita Pelo con Botón</h3>
+            <p>Peine con cerdas suaves de acero para remover el pelo muerto fácilmente con sistema de limpieza rápida.</p>
+            <div class="card-bottom">
+              <span class="price">$150.00</span>
+              <button class="btn-cart" data-id="16" data-nombre="Cepillo Quita Pelo con Botón" data-precio="150.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 17 -->
+        <article class="product-card producto-oculto" data-categoria="Medicina">
+          <div class="product-img-box">
+            <img src="imagenesss/balsamo.png" alt="Producto 17" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Medicina</span>
+            <h3>Balsamo para el cuidado del hocico y patas.</h3>
+            <p>Barra de cuidado ultrasuave para mascotas con aceite de y frutos secos, 
+              calma las patas secas y agrietadas y protege a las mascotas de las altas temperaturas, 
+              ideal para perros
+              barra hidratante para mascotas</p>
+            <div class="card-bottom">
+              <span class="price">$190.00</span>
+              <button class="btn-cart" data-id="17" data-nombre="Balsamo" data-precio="190.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 18 -->
+        <article class="product-card producto-oculto" data-categoria="Accesorios">
+          <div class="product-img-box">
+            <img src="imagenesss/mochila.png" alt="Producto 18" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Accesorios</span>
+            <h3>Mochila Portatil para mascotas</h3>
+            <p>New Mochila Portátil para Perros y Gatos Teddy - Uso Diario</p>
+            <div class="card-bottom">
+              <span class="price">$110.00</span>
+              <button class="btn-cart" data-id="18" data-nombre="Mochila portatil" data-precio="110.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 19 -->
+        <article class="product-card producto-oculto" data-categoria="Medicina">
+          <div class="product-img-box">
+            <img src="imagenesss/shampo12.png" alt="Producto 19" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Medicina</span>
+            <h3>Shampoo de Zábila para Caballo 1lt </h3>
+            <p>Tratamiento para el baño de caballos, especial para raspones y heridas leves en la piel.</p>
+            <div class="card-bottom">
+              <span class="price">$310.00</span>
+              <button class="btn-cart" data-id="19" data-nombre="Shampoo de Zábila para Caballo 1lt " data-precio="310.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 20 -->
+        <article class="product-card producto-oculto" data-categoria="Comida">
+          <div class="product-img-box">
+            <img src="imagenesss/alimento conejo.png" alt="Producto 20" class="card-img">
+          </div>
+          <div class="product-details">
+            <span class="category-tag">Comida</span>
+            <h3>Alimeto para conejos</h3>
+            <p>Alimento para Conejos | Pellet para Roedores y Mascotas Pequeñas | Conney Crackers Biomaa.</p>
+            <div class="card-bottom">
+              <span class="price">$165.00</span>
+              <button class="btn-cart" data-id="20" data-nombre="Alimento para conejos" data-precio="165.00">Agregar al Carrito</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="action-footer">
+        <button id="btn-ver-mas" class="btn-secondary-action">Ver más productos...</button>
+      </div>
+
+    </section>
+
+  </main>
+
+
+   <!-- =========================================================
+       PIE DE PÁGINA
+       Tal como se indica en el documento: fondo color de acento
+       (#284D49), tres columnas: marca, contacto y horarios.
+       ========================================================= -->
+  <footer class="main-footer">
+    <div class="footer-col footer-brand">
+      <!-- IMAGEN: ícono/logo pequeño junto al nombre "Lomi" -->
+      <h3><img src="https://placehold.co/28x28/284D49/FFAB5E?text=%F0%9F%90%BE"
+               alt="" class="footer-logo-icon"> Lomi</h3>
+      <p>Centro de adopción y cuidado canino/felino.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <p>📍 Calle Principal #123</p>
+      <p>📞 +52 555 123 4567</p>
+      <p>✉️ contacto@lomi.com</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Horarios</h4>
+      <p>Lunes a viernes: 8:00 AM - 6:00 PM</p>
+      <p>Sábados: 9:00 AM - 2:00 PM</p>
+    </div>
+  </footer>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // ==========================================
+    // 1. GESTIÓN DEL CARRITO DE COMPRAS
+    // ==========================================
+    let carrito = JSON.parse(localStorage.getItem('carrito_lomi')) || [];
+
+    const cartBadge = document.getElementById('cart-badge');
+    const btnVerMas = document.getElementById('btn-ver-mas');
+    const modalCarrito = document.getElementById('modal-carrito');
+    const btnAbrirCarrito = document.querySelector('.cart-btn');
+    const btnCerrarCarrito = document.getElementById('cerrar-carrito');
+    const listaCarrito = document.getElementById('lista-carrito');
+    const totalPrecioElem = document.getElementById('total-precio');
+    const productsGrid = document.querySelector('.products-grid');
+
+    actualizarCarritoUI();
+
+    if (btnVerMas) {
+      btnVerMas.addEventListener('click', function() {
+        document.querySelectorAll('.product-card.producto-oculto').forEach(prod => {
+          prod.classList.remove('producto-oculto');
+        });
+        this.style.display = 'none';
+      });
+    }
+
+    if (productsGrid) {
+      productsGrid.addEventListener('click', function(e) {
+        const btn = e.target.closest('.btn-cart');
+        if (btn) {
+          e.stopPropagation();
+          const id = btn.getAttribute('data-id');
+          const nombre = btn.getAttribute('data-nombre');
+          const precio = parseFloat(btn.getAttribute('data-precio'));
+
+          if (nombre && !isNaN(precio)) {
+            carrito.push({ id, nombre, precio });
+            guardarCarritoEnStorage();
+            actualizarCarritoUI();
+
+            const textoOriginal = btn.textContent;
+            btn.textContent = '¡Agregado!';
+            btn.style.backgroundColor = '#FFAB5E';
+            setTimeout(() => {
+              btn.textContent = textoOriginal;
+              btn.style.backgroundColor = '';
+            }, 1000);
+          }
+        }
+      });
+    }
+
+    if (listaCarrito) {
+      listaCarrito.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('btn-eliminar-item')) {
+          const indexAEliminar = parseInt(e.target.getAttribute('data-index'));
+          carrito.splice(indexAEliminar, 1);
+          guardarCarritoEnStorage();
+          actualizarCarritoUI();
+        }
+      });
+    }
+
+    function guardarCarritoEnStorage() {
+      localStorage.setItem('carrito_lomi', JSON.stringify(carrito));
+    }
+
+    function actualizarCarritoUI() {
+      if (cartBadge) cartBadge.textContent = carrito.length;
+      if (!listaCarrito || !totalPrecioElem) return;
+
+      if (carrito.length === 0) {
+        listaCarrito.innerHTML = '<p class="carrito-vacio">Tu carrito está vacío.</p>';
+        totalPrecioElem.textContent = '$0.00';
+        return;
+      }
+
+      listaCarrito.innerHTML = '';
+      let total = 0;
+
+      carrito.forEach((item, index) => {
+        total += Number(item.precio);
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('item-carrito');
+        itemElement.innerHTML = `
+          <div class="info-item-carrito">
+            <span class="nombre-item">${item.nombre}</span>
+            <span class="precio-item">$${Number(item.precio).toFixed(2)}</span>
+          </div>
+          <button class="btn-eliminar-item" data-index="${index}" title="Eliminar producto">&times;</button>
+        `;
+        listaCarrito.appendChild(itemElement);
+      });
+
+      totalPrecioElem.textContent = `$${total.toFixed(2)}`;
+    }
+
+    if (btnAbrirCarrito && modalCarrito) {
+      btnAbrirCarrito.addEventListener('click', function(e) {
+        e.preventDefault();
+        modalCarrito.classList.add('activo');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+
+    if (btnCerrarCarrito && modalCarrito) {
+      btnCerrarCarrito.addEventListener('click', function() {
+        modalCarrito.classList.remove('activo');
+        document.body.style.overflow = '';
+      });
+    }
+
+    window.addEventListener('click', function(e) {
+      if (modalCarrito && e.target === modalCarrito) {
+        modalCarrito.classList.remove('activo');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // ==========================================
+    // 2. FILTRADO POR CATEGORÍAS
+    // ==========================================
+    const botonesFiltro = document.querySelectorAll('.categories-filter .filter-btn');
+
+    botonesFiltro.forEach(boton => {
+      boton.addEventListener('click', function(e) {
+        e.preventDefault();
+        const categoriaSeleccionada = this.getAttribute('data-categoria').toLowerCase();
+
+        botonesFiltro.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+
+        const tarjetasProductos = document.querySelectorAll('.products-grid .product-card');
+
+        tarjetasProductos.forEach(tarjeta => {
+          const catProducto = tarjeta.getAttribute('data-categoria') ? tarjeta.getAttribute('data-categoria').toLowerCase() : '';
+
+          if (categoriaSeleccionada === 'todos' || catProducto === categoriaSeleccionada) {
+            tarjeta.classList.remove('producto-oculto');
+          } else {
+            tarjeta.classList.add('producto-oculto');
+          }
+        });
+
+        if (btnVerMas) {
+          if (categoriaSeleccionada !== 'todos') {
+            btnVerMas.style.display = 'none';
+          } else {
+            btnVerMas.style.display = '';
+          }
+        }
+      });
+    });
+
+    // ==========================================
+    // 3. BÚSQUEDA DINÁMICA DE PRODUCTOS
+    // ==========================================
+    const inputBusqueda = document.getElementById('input-busqueda');
+
+    if (inputBusqueda) {
+      inputBusqueda.addEventListener('input', function() {
+        const textoBusqueda = inputBusqueda.value.toLowerCase().trim();
+        const tarjetasProductos = document.querySelectorAll('.products-grid .product-card');
+
+        tarjetasProductos.forEach(tarjeta => {
+          const tituloElemento = tarjeta.querySelector('h3');
+          if (tituloElemento) {
+            const nombreProducto = tituloElemento.textContent.toLowerCase();
+            if (nombreProducto.includes(textoBusqueda)) {
+              tarjeta.classList.remove('producto-oculto');
+            } else {
+              tarjeta.classList.add('producto-oculto');
+            }
+          }
+        });
+      });
+    }
+
+    // ==========================================
+    // 4. CARGAR DATOS Y FOTO DEL USUARIO
+    // ==========================================
+    const usuarioGuardado = JSON.parse(localStorage.getItem('usuario_lomi'));
+    const avatarImg = document.getElementById('user-avatar');
+    const userNameText = document.getElementById('user-name-text');
+    const userEmailText = document.getElementById('user-email-text');
+
+    if (usuarioGuardado) {
+      if (avatarImg && usuarioGuardado.foto) {
+        avatarImg.src = usuarioGuardado.foto;
+      } else if (avatarImg && localStorage.getItem('foto_usuario')) {
+        avatarImg.src = localStorage.getItem('foto_usuario');
+      }
+
+      if (userNameText) userNameText.textContent = usuarioGuardado.nombre;
+      if (userEmailText) userEmailText.textContent = usuarioGuardado.email;
+    } else {
+      if (userNameText) userNameText.textContent = '¡Hola, bienvenido!';
+      if (userEmailText) userEmailText.textContent = 'Sin sesión iniciada';
+    }
+
+    // ==========================================
+    // 5. SISTEMA DE NOTIFICACIONES
+    // ==========================================
+    let notificaciones = JSON.parse(localStorage.getItem('notificaciones_lomi')) || []; 
+
+    const btnNotificaciones = document.getElementById('btn-notificaciones');
+    const notificationDropdown = document.getElementById('notification-dropdown');
+    const notificationBadge = document.getElementById('notification-badge');
+    const notificationList = document.getElementById('notification-list');
+
+    actualizarNotificacionesUI();
+
+    if (btnNotificaciones && notificationDropdown) {
+      btnNotificaciones.addEventListener('click', function(e) {
+        e.stopPropagation();
+        notificationDropdown.classList.toggle('activo');
+      });
+
+      window.addEventListener('click', function(e) {
+        if (!notificationDropdown.contains(e.target) && e.target !== btnNotificaciones) {
+          notificationDropdown.classList.remove('activo');
+        }
+      });
+    }
+
+    if (notificationList) {
+      notificationList.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('btn-eliminar-notif')) {
+          e.stopPropagation();
+          const idAEliminar = parseInt(e.target.getAttribute('data-id'));
+          notificaciones = notificaciones.filter(notif => notif.id !== idAEliminar);
+          localStorage.setItem('notificaciones_lomi', JSON.stringify(notificaciones));
+          actualizarNotificacionesUI();
+        }
+      });
+    }
+
+    function actualizarNotificacionesUI() {
+      if (!notificationBadge || !notificationList) return;
+
+      const cantidad = notificaciones.length;
+
+      if (cantidad > 0) {
+        notificationBadge.textContent = cantidad;
+        notificationBadge.classList.remove('oculto');
+      } else {
+        notificationBadge.classList.add('oculto');
+      }
+
+      if (cantidad === 0) {
+        notificationList.innerHTML = '<p class="notif-vacia">Aún no hay notificaciones</p>';
+        return;
+      }
+
+      notificationList.innerHTML = '';
+      notificaciones.forEach(notif => {
+        const item = document.createElement('div');
+        item.classList.add('item-notificacion');
+        item.innerHTML = `
+          <button class="btn-eliminar-notif" data-id="${notif.id}" title="Descartar notificación">&times;</button>
+          <span class="notif-titulo">${notif.titulo}</span>
+          <p class="notif-descripcion">${notif.descripcion}</p>
+          <span class="notif-fecha">${notif.fecha}</span>
+        `;
+        notificationList.appendChild(item);
+      });
+    }
+
+    window.agregarNotificacion = function(titulo, descripcion) {
+      const nuevaNotif = {
+        id: Date.now(),
+        titulo: titulo,
+        descripcion: descripcion,
+        fecha: 'Ahora'
+      };
+      notificaciones.unshift(nuevaNotif);
+      localStorage.setItem('notificaciones_lomi', JSON.stringify(notificaciones));
+      actualizarNotificacionesUI();
+    };
+
+    // ==========================================
+    // 6. MENÚ DESPLEGABLE DE PERFIL Y LOGOUT
+    // ==========================================
+    const btnUserAvatar = document.getElementById('btn-user-avatar');
+    const userDropdownMenu = document.getElementById('user-dropdown-menu');
+    const btnLogout = document.getElementById('menu-opcion-logout');
+    const menuCuenta = document.getElementById('menu-opcion-cuenta');
+    const menuPrivacidad = document.getElementById('menu-opcion-privacidad');
+
+    if (btnUserAvatar && userDropdownMenu) {
+      btnUserAvatar.addEventListener('click', (event) => {
+        event.stopPropagation();
+        userDropdownMenu.classList.toggle('oculto');
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!userDropdownMenu.contains(event.target) && !btnUserAvatar.contains(event.target)) {
+          userDropdownMenu.classList.add('oculto');
+        }
+      });
+    }
+
+    if (menuCuenta) {
+      menuCuenta.addEventListener('click', () => {
+        userDropdownMenu.classList.add('oculto');
+      });
+    }
+
+    if (menuPrivacidad) {
+      menuPrivacidad.addEventListener('click', () => {
+        userDropdownMenu.classList.add('oculto');
+      });
+    }
+
+    if (btnLogout) {
+      btnLogout.addEventListener('click', () => {
+        if (userDropdownMenu) userDropdownMenu.classList.add('oculto');
+        
+        Swal.fire({
+          title: 'Cerrando sesión...',
+          text: '¿Estás seguro de que deseas cerrar sesión?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#FFAB5E',
+          cancelButtonColor: '#284D49',
+          confirmButtonText: 'Sí, cerrar sesión',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            localStorage.removeItem('usuario_lomi');
+            localStorage.removeItem('foto_usuario');
+            window.location.href = 'login.html'; 
+          }
+        });
+      });
+    }
+
+    // ==========================================
+    // 7. LÓGICA DE PROCESAMIENTO Y MÉTODOS DE PAGO
+    // ==========================================
+    const btnComprar = document.getElementById('btn-comprar');
+    const modalPago = document.getElementById('modal-pago');
+    const btnCerrarPago = document.getElementById('cerrar-pago');
+    const detallesPagoBox = document.getElementById('detalles-pago-box');
+    const pagoTotalMonto = document.getElementById('pago-total-monto');
+    const btnConfirmarPago = document.getElementById('btn-confirmar-pago');
+    const radiosPago = document.querySelectorAll('input[name="metodo_pago"]');
+
+    const vistasMetodos = {
+      oxxo: `
+        <p><strong>Ficha de Pago OXXO Pay</strong></p>
+        <p>Al confirmar se generará una referencia de 14 dígitos para pagar en caja.</p>
+        <small style="color:#666;">Comisión adicional de $15 MXN cobrada en tienda.</small>
+      `,
+      mercadopago: `
+        <p><strong>Mercado Pago</strong></p>
+        <p>Se enviará la solicitud de cobro a tu cuenta vinculada de Mercado Pago.</p>
+        <input type="email" placeholder="Correo de tu cuenta Mercado Pago" class="input-simulado">
+      `,
+      spei: `
+        <p><strong>Transferencia Electrónica (SPEI)</strong></p>
+        <p><strong>CLABE:</strong> 012180001234567890</p>
+        <p><strong>Banco:</strong> BBVA / Lomi Centro</p>
+        <small style="color:#666;">Usa tu número de pedido como concepto.</small>
+      `,
+      tarjeta: `
+        <p><strong>Tarjeta de Crédito / Débito</strong></p>
+        <input type="text" placeholder="Número de Tarjeta (16 dígitos)" class="input-simulado" maxlength="16">
+        <div style="display:flex; gap:10px;">
+          <input type="text" placeholder="MM/AA" class="input-simulado" maxlength="5">
+          <input type="password" placeholder="CVV" class="input-simulado" maxlength="4">
+        </div>
+      `
+    };
+
+    if (btnComprar) {
+      btnComprar.addEventListener('click', function() {
+        if (carrito.length === 0) {
+          Swal.fire({
+            title: 'Carrito vacío',
+            text: 'Agrega al menos un producto para proceder al pago.',
+            icon: 'warning',
+            confirmButtonColor: '#FFAB5E'
+          });
+          return;
+        }
+
+        let total = carrito.reduce((acc, prod) => acc + Number(prod.precio), 0);
+        if (pagoTotalMonto) pagoTotalMonto.textContent = `$${total.toFixed(2)}`;
+
+        if (detallesPagoBox) detallesPagoBox.innerHTML = vistasMetodos['oxxo'];
+
+        modalCarrito.classList.remove('activo');
+        modalPago.classList.add('activo');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+
+    radiosPago.forEach(radio => {
+      radio.addEventListener('change', function() {
+        const metodo = this.value;
+        if (vistasMetodos[metodo] && detallesPagoBox) {
+          detallesPagoBox.innerHTML = vistasMetodos[metodo];
+        }
+      });
+    });
+
+    if (btnCerrarPago && modalPago) {
+      btnCerrarPago.addEventListener('click', function() {
+        modalPago.classList.remove('activo');
+        document.body.style.overflow = '';
+      });
+    }
+
+    if (btnConfirmarPago) {
+      btnConfirmarPago.addEventListener('click', function() {
+        const opcionRadio = document.querySelector('input[name="metodo_pago"]:checked');
+        if (!opcionRadio) {
+          Swal.fire({
+            title: 'Atención',
+            text: 'Por favor selecciona un método de pago.',
+            icon: 'warning',
+            confirmButtonColor: '#FFAB5E'
+          });
+          return;
+        }
+
+        const metodoSeleccionado = opcionRadio.value.toUpperCase();
+        const numOrden = Math.floor(100000 + Math.random() * 900000);
+        const totalPagado = pagoTotalMonto ? pagoTotalMonto.textContent : '$0.00';
+
+        let mensajeFinal = `Tu orden #${numOrden} ha sido procesada con éxito mediante ${metodoSeleccionado}.`;
+        if (metodoSeleccionado === 'OXXO') {
+          mensajeFinal = `Referencia OXXO Pay: <strong>8392-${numOrden}-90</strong><br>Tienes 48 hrs para realizar tu pago.`;
+        }
+
+        Swal.fire({
+          title: '¡Compra Registrada!',
+          html: mensajeFinal,
+          icon: 'success',
+          confirmButtonColor: '#FFAB5E',
+          confirmButtonText: 'Entendido'
+        }).then(() => {
+          if (typeof window.agregarNotificacion === 'function') {
+            window.agregarNotificacion(
+              `Compra realizada (#${numOrden})`,
+              `Pago de ${totalPagado} vía ${metodoSeleccionado}.`
+            );
+          }
+
+          carrito = [];
+          guardarCarritoEnStorage();
+          actualizarCarritoUI();
+
+          if (modalPago) modalPago.classList.remove('activo');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+
+    // ==========================================
+    // 8. VISTA DETALLADA DEL PRODUCTO (MODAL TEMU)
+    // ==========================================
+    const modalDetalle = document.getElementById('modal-detalle-producto');
+    const btnCerrarDetalle = document.getElementById('cerrar-detalle');
+    const imgPrincipal = document.getElementById('detalle-img-principal');
+    const miniaturasBox = document.getElementById('miniaturas-box');
+    const detalleTitulo = document.getElementById('detalle-titulo');
+    const detalleCategoria = document.getElementById('detalle-categoria');
+    const detallePrecio = document.getElementById('detalle-precio');
+    const detalleDescripcion = document.getElementById('detalle-descripcion');
+    const inputCantidad = document.getElementById('input-cantidad');
+    const btnMenos = document.getElementById('btn-menos');
+    const btnMas = document.getElementById('btn-mas');
+    const btnAgregarDesdeDetalle = document.getElementById('btn-agregar-desde-detalle');
+
+    let productoActualModal = null;
+
+    // DICCIONARIO DE IMÁGENES POR PRODUCTO (Aquí asignas las fotos específicas para cada ID)
+    const galeriaProductos = {
+      "1": ["imagenesss/alimentorp.png", "imagenesss/perrocomida.png"],
+      "2": ["imagenesss/correa.png", ],
+      "3": ["imagenesss/desparicitante.png"],
+      "4": ["imagenesss/snacks.png", "imagenesss/snacks2.png"],
+      "5": ["imagenesss/cama.p.g.png", "imagenesss/cama2.png"],
+      "6": ["imagenesss/shampoo.png"],
+      "7": ["imagenesss/lentes de sol.png"],
+      "8": ["imagenesss/huesos.png", "imagenesss/huesos2.png"],
+      "9": ["imagenesss/gotas.png"],
+      "10": ["imagenesss/gorros.png", "imagenesss/gorras2.png"],
+      "11": ["imagenesss/galletas.png"],
+      "12": ["imagenesss/sudadera.png", "imagenesss/dudadera2.png", "imagenesss/sudadera3.png" ],
+      "13": ["imagenesss/medicina.png"],
+      "14": ["imagenesss/hierba gatera.png", "imagenesss/hierba.png"],
+      "15": ["imagenesss/sobre.png", "imagenesss/sobre.p.png" ],
+      "16": ["imagenesss/cepillo.png", "imagenesss/pelo.png"],
+      "17": ["imagenesss/balsamo.png", "imagenesss/balsamo2.png"],
+      "18": ["imagenesss/mochila.png", "imagenesss/mochila2.png"],
+      "19": ["imagenesss/shampo12.png"],
+      "20": ["imagenesss/alimento conejo.png", "imagenesss/conejo.png"]
+    };
+
+    // Abrir Modal de Detalle al pulsar cualquier tarjeta de producto
+    if (productsGrid) {
+      productsGrid.addEventListener('click', function(e) {
+        if (e.target.closest('.btn-cart')) return;
+
+        const card = e.target.closest('.product-card');
+        if (card) {
+          const btnCart = card.querySelector('.btn-cart');
+          const id = btnCart.getAttribute('data-id');
+          const nombre = btnCart.getAttribute('data-nombre');
+          const precio = parseFloat(btnCart.getAttribute('data-precio'));
+          const categoria = card.getAttribute('data-categoria') || 'General';
+          const descripcion = card.querySelector('p').textContent;
+          const imgPortada = card.querySelector('.card-img').src;
+
+          productoActualModal = { id, nombre, precio, categoria, descripcion };
+
+          detalleTitulo.textContent = nombre;
+          detalleCategoria.textContent = categoria;
+          detallePrecio.textContent = `$${precio.toFixed(2)}`;
+          detalleDescripcion.textContent = descripcion;
+          inputCantidad.value = 1;
+
+          // Cargar las imágenes específicas del ID correspondiente o la foto de portada si no está en la lista
+          let imagenes = galeriaProductos[id] || [imgPortada];
+          imgPrincipal.src = imagenes[0];
+          miniaturasBox.innerHTML = '';
+
+          imagenes.forEach((srcImg, idx) => {
+            const imgThumb = document.createElement('img');
+            imgThumb.src = srcImg;
+            imgThumb.classList.add('miniatura-img');
+            if (idx === 0) imgThumb.classList.add('activa');
+
+            imgThumb.addEventListener('click', function() {
+              imgPrincipal.src = srcImg;
+              document.querySelectorAll('.miniatura-img').forEach(m => m.classList.remove('activa'));
+              this.classList.add('activa');
+            });
+
+            miniaturasBox.appendChild(imgThumb);
+          });
+
+          modalDetalle.classList.add('activo');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    }
+
+    if (btnMenos && btnMas && inputCantidad) {
+      btnMenos.addEventListener('click', () => {
+        let val = parseInt(inputCantidad.value) || 1;
+        if (val > 1) inputCantidad.value = val - 1;
+      });
+
+      btnMas.addEventListener('click', () => {
+        let val = parseInt(inputCantidad.value) || 1;
+        if (val < 99) inputCantidad.value = val + 1;
+      });
+    }
+
+    if (btnAgregarDesdeDetalle) {
+      btnAgregarDesdeDetalle.addEventListener('click', function() {
+        if (!productoActualModal) return;
+
+        const cantidad = parseInt(inputCantidad.value) || 1;
+
+        for (let i = 0; i < cantidad; i++) {
+          carrito.push({
+            id: productoActualModal.id,
+            nombre: productoActualModal.nombre,
+            precio: productoActualModal.precio
+          });
+        }
+
+        guardarCarritoEnStorage();
+        actualizarCarritoUI();
+
+        Swal.fire({
+          title: '¡Producto Agregado!',
+          text: `Se agregaron ${cantidad} unidad(es) al carrito.`,
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+
+        modalDetalle.classList.remove('activo');
+        document.body.style.overflow = '';
+      });
+    }
+
+    if (btnCerrarDetalle) {
+      btnCerrarDetalle.addEventListener('click', () => {
+        modalDetalle.classList.remove('activo');
+        document.body.style.overflow = '';
+      });
+    }
+
+  });
+  </script>
+
+</body>
+</html>
