@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Mascotas y Citas</title>
+  <link rel="stylesheet" href="registros.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+  <header class="navbar">
+    
+    <div class="nav-logo">
+      <a href="index-inicio.html">
+        <img src="imagenesss/lomi-logo.png" alt="Logo Veterinaria" class="logo-img" />
+      </a>
+    </div>
+
+    <nav class="nav-links">
+      <a href="index-inicio.html">Inicio</a>
+      <a href="index-registro.html" class="active">Registro de Datos</a>
+      <a href="historial.html">Historial</a>
+      <a href="index.html">Tienda</a>
+      <a href="index-servicios.html">Servicios</a>
+      <a href="indexreseña.html">Reseñas</a>
+    </nav>
+
+    <div class="user-actions">
+      
+      <!-- NOTIFICACIONES -->
+      <div class="notification-container">
+        <button class="icon-btn notification-btn" id="btn-notificaciones" type="button" title="Notificaciones" onclick="toggleNotificaciones()">
+          <img src="imagenesss/campana-removebg-preview.png" alt="Notificaciones" class="icon-img">
+          <span class="badge notification-badge oculto" id="notification-badge">0</span>
+        </button>
+
+        <div class="notification-dropdown" id="notification-dropdown">
+          <div class="notification-header">
+            <h3>Notificaciones</h3>
+          </div>
+          <div class="notification-list" id="notification-list">
+            <p class="notif-vacia">Aún no hay notificaciones</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERFIL DE USUARIO -->
+<div class="user-profile-container" id="user-profile-container">
+  <button type="button" class="user-avatar-btn" id="btn-user-avatar" title="Perfil de usuario" onclick="toggleUserDropdown()">
+      <img src="user-avatar.png" alt="Perfil" id="user-avatar" class="user-avatar-img">
+    </div>
+  </button>
+
+  <div class="user-dropdown-menu oculto" id="user-dropdown-menu">
+    <div class="dropdown-header">
+      <p class="user-name" id="user-name-text">¡Hola, bienvenido!</p>
+      <p class="user-email" id="user-email-text">Sin sesión iniciada</p>
+    </div>
+    <hr class="dropdown-divider" />
+    <ul class="dropdown-list" id="dropdown-list-options">
+      <li><a href="#cuenta" class="dropdown-item" id="menu-opcion-cuenta">Mi Cuenta</a></li>
+      <li><a href="#privacidad" class="dropdown-item" id="menu-opcion-privacidad">Avisos de Privacidad</a></li>
+      <li><button type="button" class="dropdown-item btn-logout" id="menu-opcion-logout" onclick="cerrarSesion(event)">Cerrar Sesión</button></li>
+    </ul>
+  </div>
+</div>
+
+    </div>
+
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="content">
+    <h1 class="page-title">Registro de Mascota y Citas</h1>
+    <p class="page-subtitle">Registra los datos de la mascota y agenda su próxima cita.</p>
+
+    <section class="card form-card" id="registro-mascota">
+      <div class="card-header">
+        <img src="https://web.ucenm.net/wp-content/uploads/2026/05/Computadora-icono-1024x1024.png" alt="Imagen de mascota" class="card-icon" />
+        <h2>Registrar mascota</h2>
+      </div>
+
+      <form id="form-mascota" novalidate>
+        <div class="form-group full-width">
+          <label for="foto-mascota">Fotografía de la mascota</label>
+          <div class="foto-upload">
+            <div class="foto-preview-wrap">
+              <img id="foto-preview" class="foto-preview" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrqVNHFsSSlpoKQK3hYidUvHC4_-m-xKN-4SxVsf2Mvg&s=10" alt="Vista previa de la fotografía" />
+            </div>
+            <div class="foto-upload-controls">
+              <input type="file" id="foto-mascota" name="foto-mascota" accept="image/*" />
+              <button type="button" class="btn btn-secondary btn-small" id="quitar-foto">Quitar foto</button>
+              <p class="foto-hint"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nombre-mascota">Nombre de la mascota</label>
+            <input type="text" id="nombre-mascota" name="nombre-mascota" placeholder="Ej. Firulais" required />
+          </div>
+          <div class="form-group">
+            <label for="especie">Especie</label>
+            <input type="text" id="especie" name="especie" placeholder="Ej. Perro, gato, ave..." required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="raza">Raza</label>
+            <input type="text" id="raza" name="raza" placeholder="Ej. Labrador" />
+          </div>
+          <div class="form-group">
+            <label for="edad">Edad</label>
+            <input type="number" id="edad" name="edad" placeholder="Ej. 3" min="0" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dueno">Dueño</label>
+            <input type="text" id="dueno" name="dueno" placeholder="Nombre del dueño" required />
+          </div>
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Ej. 555-123-4567" />
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="notas">Notas / observaciones</label>
+          <textarea id="notas" name="notas" rows="4" placeholder="Alergias, condiciones especiales, vacunas pendientes, etc."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="reset" class="btn btn-secondary" id="cancelar-mascota">Cancelar</button>
+        </div>
+
+        <p class="mensaje mensaje-exito" id="mensaje-exito-mascota" hidden>✔ Mascota registrada con éxito</p>
+        <p class="mensaje mensaje-error" id="mensaje-error-mascota" hidden>⚠ Completa los campos obligatorios (nombre, especie y dueño).</p>
+      </form>
+
+      <div class="mascotas-registradas">
+        <h3>Mascotas registradas</h3>
+        <div class="mascotas-grid" id="mascotas-grid">
+          <p class="lista-vacia" id="mascotas-vacio">Todavía no hay mascotas registradas.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card citas-card" id="registro-citas">
+      <div class="card-header">
+        <img src="https://thumbs.dreamstime.com/b/icono-de-programaci%C3%B3n-cita-vector-naranja-perfecto-para-el-dise%C3%B1o-y-desarrollo-sitios-web-impresos-archivos-presentaciones-191520254.jpg" alt="Icono de calendario de citas" class="card-icon" />
+        <h2>Registrar cita</h2>
+      </div>
+
+      <form id="form-cita" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="mascota-cita">Mascota</label>
+            <select id="mascota-cita" name="mascota-cita" required>
+              <option value="">Selecciona una mascota registrada</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="motivo">Motivo de la cita</label>
+            <input type="text" id="motivo" name="motivo" placeholder="Ej. Vacunación, consulta general" />
+          </div>
+        </div>
+
+        <div class="calendario-container">
+          <div class="calendario-toolbar">
+            <p class="calendario-label">Selecciona fecha y horario disponible</p>
+            <div class="calendario-nav">
+              <button type="button" class="btn-semana" id="semana-anterior" aria-label="Semana anterior">‹</button>
+              <span id="semana-actual-label">Semana actual</span>
+              <button type="button" class="btn-semana" id="semana-siguiente" aria-label="Semana siguiente">›</button>
+            </div>
+          </div>
+
+          <div class="calendario-grid" id="calendario-grid"></div>
+
+          <div class="calendario-leyenda">
+            <span><i class="cuadro disponible"></i> Disponible</span>
+            <span><i class="cuadro seleccionado"></i> Seleccionado</span>
+            <span><i class="cuadro ocupado-leyenda"></i> Ocupado</span>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="reset" class="btn btn-secondary" id="cancelar-cita">Cancelar</button>
+        </div>
+
+        <p class="mensaje mensaje-exito" id="mensaje-exito-cita" hidden>✔ Cita registrada con éxito</p>
+        <p class="mensaje mensaje-error" id="mensaje-error-cita" hidden>⚠ Selecciona una mascota y un horario disponible antes de guardar.</p>
+      </form>
+
+      <div class="agenda-citas">
+        <h3>Agenda de citas</h3>
+        <div class="agenda-lista" id="agenda-lista">
+          <p class="lista-vacia" id="agenda-vacio">Todavía no hay citas registradas.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="main-footer">
+    <div class="footer-col footer-brand">
+      <h3><img src="https://placehold.co/28x28/284D49/FFAB5E?text=%F0%9F%90%BE" alt="" class="footer-logo-icon" /> Lomi</h3>
+      <p>Centro de adopción y cuidado canino/felino.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <p>📍 Calle Principal #123</p>
+      <p>📞 +52 555 123 4567</p>
+      <p>✉️ contacto@lomi.com</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Horarios</h4>
+      <p>Lunes a viernes: 8:00 AM - 6:00 PM</p>
+      <p>Sábados: 9:00 AM - 2:00 PM</p>
+    </div>
+  </footer>
+
+  <script src="registros.js"></script>
+  <script>
+    function toggleNotificaciones() {
+      const dropdown = document.getElementById("notification-dropdown");
+      if (dropdown) dropdown.classList.toggle("activo");
+      const userMenu = document.getElementById("user-dropdown-menu");
+      if (userMenu && !userMenu.classList.contains("oculto")) {
+        userMenu.classList.add("oculto");
+      }
+    }
+
+    function toggleUserDropdown() {
+      const userMenu = document.getElementById("user-dropdown-menu");
+      if (userMenu) userMenu.classList.toggle("oculto");
+      const dropdown = document.getElementById("notification-dropdown");
+      if (dropdown && dropdown.classList.contains("activo")) {
+        dropdown.classList.remove("activo");
+      }
+    }
+
+    function cerrarSesion(event) {
+      if (event) event.preventDefault();
+      if (confirm("¿Deseas cerrar sesión?")) {
+        localStorage.removeItem("usuario_lomi");
+        window.location.href = "index.html";
+      }
+    }
+
+    // Cerrar al hacer clic fuera
+    document.addEventListener("click", function (event) {
+      const notificationBtn = document.getElementById("btn-notificaciones");
+      const userBtn = document.getElementById("btn-user-avatar");
+      const notificationDropdown = document.getElementById("notification-dropdown");
+      const userDropdown = document.getElementById("user-dropdown-menu");
+
+      if (notificationBtn && notificationDropdown && !notificationBtn.contains(event.target) && !notificationDropdown.contains(event.target)) {
+        notificationDropdown.classList.remove("activo");
+      }
+
+      if (userBtn && userDropdown && !userBtn.contains(event.target) && !userDropdown.contains(event.target)) {
+        userDropdown.classList.add("oculto");
+      }
+    });
+
+    // Cerrar con la tecla Escape
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        const notif = document.getElementById("notification-dropdown");
+        const menu = document.getElementById("user-dropdown-menu");
+        if (notif) notif.classList.remove("activo");
+        if (menu) menu.classList.add("oculto");
+      }
+    });
+  </script>
+</body>
+</html>
